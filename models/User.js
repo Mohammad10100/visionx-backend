@@ -21,8 +21,18 @@ const userSchema = new mongoose.Schema(
         matchesPlayed:{
             type:Number,
             default:0,
-        }
-    }
+        },
+        token: {
+			type: String,
+		},
+		resetPasswordExpires: {
+			type: Date,
+		},
+		image: {
+			type: String,
+			required: true,
+		},
+    },{ timestamps: true }
 )
 
 module.exports = mongoose.model("User", userSchema);

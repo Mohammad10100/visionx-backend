@@ -7,9 +7,9 @@ const app = express();
 app.use(express.json())
 
 // import api routes 
-
+const userRoutes = require("./routes/User");
 // mount api routes 
-
+app.use("/api/v1/auth", userRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server started successfully on port ${PORT}`);
