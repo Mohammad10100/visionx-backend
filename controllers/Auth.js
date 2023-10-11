@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const Rank = require("../models/Rank");
 const OTP = require("../models/OTP");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
@@ -67,10 +68,16 @@ exports.signup = async (req, res) => {
 		// Hash the password
 		const hashedPassword = await bcrypt.hash(password, 10);
 
+		const userRank = await Rank.create({
+            rank: 0,
+            username: username,
+        })
+
 		const user = await User.create({
 			username,
 			email,
 			password: hashedPassword,
+			rank: userRank._id,
 			image: `https://api.dicebear.com/7.x/bottts/svg?seed=${username}`,
 		});
 
