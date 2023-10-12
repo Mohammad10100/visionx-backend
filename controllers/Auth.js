@@ -68,16 +68,11 @@ exports.signup = async (req, res) => {
 		// Hash the password
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		const userRank = await Rank.create({
-            rank: 0,
-            username: username,
-        })
 
 		const user = await User.create({
 			username,
 			email,
 			password: hashedPassword,
-			rank: userRank._id,
 			image: `https://api.dicebear.com/7.x/bottts/svg?seed=${username}`,
 		});
 
@@ -178,10 +173,10 @@ exports.sendotp = async (req, res) => {
 		// If user found with provided email
 		if (checkUserPresent) {
 			// Return 401 Unauthorized status code with error message
-			return res.status(401).json({
-				success: false,
+			return res.status(409).json({
+				success: true,
 				message: `User is Already Registered`,
-			});
+			})
 		}
 
 		var otp = otpGenerator.generate(6, {
